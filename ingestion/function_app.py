@@ -100,13 +100,9 @@ def get_document_status_store() -> DocumentStatusStore:
     + version-compare's document lookup). See `document_status.py` and
     `infra/modules/cosmos.bicep`'s "documents" container comment.
 
-    NOTE: `infra/main.bicep` does not yet pass `COSMOS_ENDPOINT`/
-    `COSMOS_DATABASE_NAME` app settings, nor a Cosmos data-plane role
-    assignment, to *this* Function App (only to the orchestrator's) -- see
-    ingestion/README.md, "Remaining production wiring". Until that infra
-    change lands, calling this in a real Azure deployment fails loudly
-    with a clear `KeyError: 'COSMOS_ENDPOINT'` the first time a document is
-    ingested, rather than silently doing nothing.
+    `infra/main.bicep` sets `COSMOS_ENDPOINT`/`COSMOS_DATABASE_NAME` on this
+    Function App and `infra/modules/rbac.bicep` grants it a data-plane role
+    scoped to the `documents` container.
     """
     if _LOCAL_DEV:
         return InMemoryDocumentStatusStore()
