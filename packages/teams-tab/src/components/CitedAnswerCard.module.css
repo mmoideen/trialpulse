@@ -1,0 +1,96 @@
+.card {
+  background: var(--tp-color-bg-raised);
+  border: 1px solid var(--tp-color-border);
+  border-radius: var(--tp-radius-md);
+  padding: var(--tp-space-4);
+  box-shadow: var(--tp-shadow-card);
+}
+
+.answer {
+  margin: 0 0 var(--tp-space-3) 0;
+  white-space: pre-wrap;
+  font-size: var(--tp-font-size-md);
+  color: var(--tp-color-fg);
+}
+
+.citationPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  margin: 0 2px;
+  font-size: var(--tp-font-size-sm);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--tp-color-accent-fg);
+  background: var(--tp-color-accent);
+  border-radius: var(--tp-radius-pill);
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.citationPill:hover,
+.citationPill:focus-visible {
+  filter: brightness(1.1);
+}
+
+.citationList {
+  list-style: none;
+  margin: var(--tp-space-3) 0 0 0;
+  padding: var(--tp-space-3) 0 0 0;
+  border-top: 1px solid var(--tp-color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tp-space-2);
+}
+
+.citationItem {
+  display: flex;
+  align-items: baseline;
+  gap: var(--tp-space-2);
+  font-size: var(--tp-font-size-sm);
+  color: var(--tp-color-fg-muted);
+}
+
+.citationIndex {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--tp-color-accent);
+}
+
+.citationLink {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.citationMeta {
+  color: var(--tp-color-fg-muted);
+}
+
+.actions {
+  display: flex;
+  gap: var(--tp-space-2);
+  margin-top: var(--tp-space-4);
+}
+
+.actionButton {
+  padding: var(--tp-space-2) var(--tp-space-3);
+  font-size: var(--tp-font-size-sm);
+  color: var(--tp-color-fg);
+  background: var(--tp-color-bg-subtle);
+  border: 1px solid var(--tp-color-border);
+  border-radius: var(--tp-radius-sm);
+  cursor: pointer;
+}
+
+.actionButton:hover {
+  background: var(--tp-color-accent-subtle-bg);
+}
+
+.copyStatus {
+  align-self: center;
+  font-size: var(--tp-font-size-sm);
+  color: var(--tp-color-fg-muted);
+}

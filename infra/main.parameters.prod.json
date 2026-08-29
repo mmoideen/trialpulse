@@ -1,0 +1,137 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "prod"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "resourceGroupName": {
+      "value": "rg-trialpulse-prod"
+    },
+    "ownerTag": {
+      "value": "clinical-platform@example.com"
+    },
+    "costCenterTag": {
+      "value": "CC-CLINOPS-001"
+    },
+    "dataClassificationTag": {
+      "value": "confidential"
+    },
+    "entraTenantId": {
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    "entraApiAudience": {
+      "value": "api://REPLACE_WITH_TAB_DOMAIN/REPLACE_WITH_AAD_APP_CLIENT_ID"
+    },
+    "entraClientId": {
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    "sharePointSiteId": {
+      "value": "REPLACE_ME"
+    },
+    "sharePointDriveId": {
+      "value": "REPLACE_ME"
+    },
+    "embeddingModelName": {
+      "value": "text-embedding-3-large"
+    },
+    "embeddingModelVersion": {
+      "value": "1"
+    },
+    "embeddingIngestionCapacity": {
+      "value": 120
+    },
+    "embeddingQueryCapacity": {
+      "value": 20
+    },
+    "gpt4oModelVersion": {
+      "value": "2024-11-20"
+    },
+    "gpt4oCapacity": {
+      "value": 30
+    },
+    "gpt4oMiniModelVersion": {
+      "value": "2024-07-18"
+    },
+    "gpt4oMiniCapacity": {
+      "value": 60
+    },
+    "openAiApiVersion": {
+      "value": "2024-10-21"
+    },
+    "searchSku": {
+      "value": "standard"
+    },
+    "searchReplicaCount": {
+      "value": 2
+    },
+    "searchPartitionCount": {
+      "value": 1
+    },
+    "searchSemanticTier": {
+      "value": "standard"
+    },
+    "searchIndexName": {
+      "value": "trialpulse-chunks"
+    },
+    "searchApiVersion": {
+      "value": "2024-07-01"
+    },
+    "cosmosCapacityMode": {
+      "value": "serverless"
+    },
+    "cosmosMaxThroughput": {
+      "value": 1000
+    },
+    "cosmosBackupTier": {
+      "value": "Continuous30Days"
+    },
+    "storageSkuName": {
+      "value": "Standard_GZRS"
+    },
+    "functionMaximumInstanceCount": {
+      "value": 100
+    },
+    "orchestratorAlwaysReadyInstances": {
+      "value": 1
+    },
+    "corsAllowedOrigins": {
+      "value": [
+        "https://teams.microsoft.com",
+        "https://local.teams.office.com"
+      ]
+    },
+    "keyVaultPurgeProtection": {
+      "value": true
+    },
+    "logRetentionInDays": {
+      "value": 90
+    },
+    "logDailyQuotaGb": {
+      "value": 10
+    },
+    "alertEmailAddresses": {
+      "value": [
+        "clinical-platform@example.com"
+      ]
+    },
+    "orchestratorDailyCostCapUsd": {
+      "value": 500
+    },
+    "orchestratorLogLevel": {
+      "value": "info"
+    },
+    "dailyModelCostThresholdUsd": {
+      "value": 20
+    },
+    "monthlyBudgetUsd": {
+      "value": 300
+    },
+    "enableBudget": {
+      "value": true
+    }
+  }
+}

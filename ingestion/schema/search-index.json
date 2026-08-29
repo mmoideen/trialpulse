@@ -1,0 +1,60 @@
+{
+  "name": "trialpulse-chunks",
+  "fields": [
+    { "name": "chunk_id", "type": "Edm.String", "key": true, "retrievable": true, "searchable": false, "filterable": false, "sortable": false, "facetable": false },
+    { "name": "document_id", "type": "Edm.String", "filterable": true, "retrievable": true, "sortable": true },
+    { "name": "document_title", "type": "Edm.String", "searchable": true, "retrievable": true },
+    { "name": "document_classification", "type": "Edm.String", "filterable": true, "facetable": true, "retrievable": true },
+    { "name": "document_version", "type": "Edm.String", "filterable": true, "sortable": true, "retrievable": true },
+    { "name": "content", "type": "Edm.String", "searchable": true, "retrievable": true },
+    { "name": "content_hash", "type": "Edm.String", "filterable": true, "retrievable": true },
+    { "name": "heading_path", "type": "Edm.String", "searchable": true, "retrievable": true },
+    { "name": "page_number", "type": "Edm.Int32", "filterable": true, "sortable": true, "retrievable": true },
+    { "name": "source_url", "type": "Edm.String", "retrievable": true },
+    { "name": "ingested_at", "type": "Edm.DateTimeOffset", "filterable": true, "sortable": true, "retrievable": true },
+    { "name": "site_code", "type": "Edm.String", "filterable": true, "facetable": true, "retrievable": true },
+    { "name": "previous_version_hash", "type": "Edm.String", "filterable": true, "retrievable": true },
+    { "name": "is_tombstoned", "type": "Edm.Boolean", "filterable": true, "retrievable": true },
+    { "name": "tombstone_purge_after", "type": "Edm.DateTimeOffset", "filterable": true, "sortable": true, "retrievable": true },
+    {
+      "name": "embedding",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "retrievable": false,
+      "dimensions": 3072,
+      "vectorSearchProfile": "trialpulse-vector-profile"
+    }
+  ],
+  "vectorSearch": {
+    "algorithms": [
+      {
+        "name": "trialpulse-hnsw",
+        "kind": "hnsw",
+        "hnswParameters": {
+          "m": 16,
+          "efConstruction": 128,
+          "efSearch": 500,
+          "metric": "cosine"
+        }
+      }
+    ],
+    "profiles": [
+      {
+        "name": "trialpulse-vector-profile",
+        "algorithm": "trialpulse-hnsw"
+      }
+    ]
+  },
+  "semantic": {
+    "configurations": [
+      {
+        "name": "trialpulse-semantic-config",
+        "prioritizedFields": {
+          "titleField": { "fieldName": "document_title" },
+          "prioritizedContentFields": [{ "fieldName": "content" }],
+          "prioritizedKeywordsFields": []
+        }
+      }
+    ]
+  }
+}

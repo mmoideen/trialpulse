@@ -1,0 +1,33 @@
+[project]
+name = "trialpulse-ingest"
+version = "0.1.0"
+description = "TrialPulse document ingestion pipeline (Azure Functions, Python)"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 115
+target-version = "py311"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+    "ANN", # flake8-annotations
+]
+ignore = [
+    "ANN401", # Any is sometimes the right type (e.g. dataclass -> dict payloads)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN"]      # test functions don't need full annotation coverage
+"scripts/**" = ["ANN"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

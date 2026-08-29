@@ -1,0 +1,33 @@
+# TrialPulse ingestion pipeline dependencies, pinned.
+#
+# Runtime (Azure Functions host + pipeline):
+azure-functions==2.3.0
+azure-identity==1.25.3
+azure-search-documents==12.0.0
+# Used by function_app._enqueue_via_queue_client (the delta sync's
+# identity-based enqueue path). This was missing from requirements.txt
+# entirely -- `from azure.storage.queue import QueueClient` would raise
+# ModuleNotFoundError on every real invocation of that function in a
+# deployed Function App, since a lazy import only defers *when* a package
+# is needed, not *whether* it needs to be installed.
+azure-storage-queue==12.17.0
+# Used by document_status.CosmosDocumentStatusStore (F4: writes the
+# orchestrator's Cosmos DB `documents` container). See ingestion/README.md,
+# "Remaining production wiring", for the infra-side app settings and RBAC
+# role assignment this also needs.
+azure-cosmos==4.16.3
+opentelemetry-api==1.44.0
+openai==3.6.0
+httpx==0.28.1
+
+# Optional document extractors (lazy-imported; see extraction.py). Pinned and
+# installed here so `.docx`/`.pdf` extraction is exercised for real in CI,
+# but every import site in the package is lazy so the rest of the test suite
+# never requires these to be present.
+python-docx==1.2.0
+pypdf==6.16.2
+
+# Dev / test tooling:
+pytest==9.1.1
+pytest-cov==7.1.0
+ruff==0.16.5

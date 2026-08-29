@@ -1,0 +1,24 @@
+Copyright (c) 2026 Meridian Therapeutics. All rights reserved.
+
+PROPRIETARY AND CONFIDENTIAL
+
+This software and its accompanying documentation (the "Software") are the
+confidential and proprietary property of Meridian Therapeutics. No licence,
+express or implied, is granted by the publication of this repository.
+
+You may not use, copy, modify, merge, publish, distribute, sublicense, or sell
+copies of the Software, or any portion of it, without the prior written
+permission of Meridian Therapeutics.
+
+Unauthorised copying of this repository, by any medium, is prohibited.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Note on content: the clinical documents in `data/synthetic/` are entirely
+fabricated for testing. They contain no real patient data, no real trial data
+and no confidential Meridian Therapeutics information.

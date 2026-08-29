@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist"
+    // No `paths` override for @trialpulse/shared: it resolves through the
+    // npm workspace symlink at node_modules/@trialpulse/shared, straight to
+    // the built `dist/` output (see that package's package.json `main`/`types`).
+    // Pointing this at ../shared/src directly used to pull shared's .ts
+    // sources into this program, which trips `rootDir` (they live outside
+    // packages/orchestrator) -- and it would silently diverge from what
+    // actually ships, since production only ever sees the built dist output.
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "dist"]
+}

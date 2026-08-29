@@ -1,0 +1,120 @@
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--tp-space-4);
+  gap: var(--tp-space-3);
+}
+
+.transcript {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tp-space-2);
+}
+
+.emptyTranscript {
+  color: var(--tp-color-fg-muted);
+  padding: var(--tp-space-5);
+  text-align: center;
+}
+
+.pendingIndicator {
+  padding: var(--tp-space-3);
+  color: var(--tp-color-fg-muted);
+  font-size: var(--tp-font-size-sm);
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tp-space-3);
+  padding: var(--tp-space-3);
+  color: var(--tp-color-danger-fg);
+  background: var(--tp-color-danger-bg);
+  border: 1px solid var(--tp-color-danger);
+  border-radius: var(--tp-radius-sm);
+}
+
+.retryButton {
+  padding: var(--tp-space-1) var(--tp-space-3);
+  color: var(--tp-color-danger-fg);
+  background: transparent;
+  border: 1px solid var(--tp-color-danger);
+  border-radius: var(--tp-radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tp-space-1);
+  border-top: 1px solid var(--tp-color-border);
+  padding-top: var(--tp-space-3);
+}
+
+.composerRow {
+  display: flex;
+  gap: var(--tp-space-2);
+  align-items: flex-end;
+}
+
+.textarea {
+  flex: 1 1 auto;
+  resize: vertical;
+  min-height: 44px;
+  max-height: 160px;
+  padding: var(--tp-space-2) var(--tp-space-3);
+  font-family: inherit;
+  font-size: var(--tp-font-size-base);
+  color: var(--tp-color-fg);
+  background: var(--tp-color-bg-raised);
+  border: 1px solid var(--tp-color-border);
+  border-radius: var(--tp-radius-sm);
+}
+
+.submitButton {
+  flex-shrink: 0;
+  padding: var(--tp-space-2) var(--tp-space-4);
+  font-size: var(--tp-font-size-base);
+  font-weight: 600;
+  color: var(--tp-color-accent-fg);
+  background: var(--tp-color-accent);
+  border: none;
+  border-radius: var(--tp-radius-sm);
+  cursor: pointer;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--tp-font-size-sm);
+  color: var(--tp-color-fg-muted);
+}
+
+.counterOverLimit {
+  color: var(--tp-color-danger);
+  font-weight: 600;
+}

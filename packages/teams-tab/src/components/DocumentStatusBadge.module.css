@@ -1,0 +1,72 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px var(--tp-space-2);
+  font-size: var(--tp-font-size-sm);
+  font-weight: 600;
+  border-radius: var(--tp-radius-pill);
+  border: 1px solid transparent;
+  cursor: default;
+}
+
+.badge:focus-visible {
+  outline: 2px solid var(--tp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.pending {
+  color: var(--tp-status-pending-fg);
+  background: var(--tp-status-pending-bg);
+}
+
+.indexed {
+  color: var(--tp-status-indexed-fg);
+  background: var(--tp-status-indexed-bg);
+}
+
+.failed {
+  color: var(--tp-status-failed-fg);
+  background: var(--tp-status-failed-bg);
+}
+
+.outdated {
+  color: var(--tp-status-outdated-fg);
+  background: var(--tp-status-outdated-bg);
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 6px);
+  left: 0;
+  width: max-content;
+  max-width: 240px;
+  padding: var(--tp-space-2) var(--tp-space-3);
+  font-size: var(--tp-font-size-sm);
+  font-weight: 400;
+  color: var(--tp-color-fg);
+  background: var(--tp-color-bg-raised);
+  border: 1px solid var(--tp-color-border);
+  border-radius: var(--tp-radius-sm);
+  box-shadow: var(--tp-shadow-card);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+
+.wrapper:hover .tooltip,
+.wrapper:focus-within .tooltip {
+  opacity: 1;
+  visibility: visible;
+}

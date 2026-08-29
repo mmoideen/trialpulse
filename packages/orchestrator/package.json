@@ -1,0 +1,36 @@
+{
+  "name": "@trialpulse/orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "dist/src/functions/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "node --enable-source-maps dist/src/local/server.js",
+    "seed": "node dist/src/local/seed.js",
+    "eval": "node dist/src/local/run-eval.js",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.2.0",
+    "@azure/functions": "^4.6.0",
+    "@azure/identity": "^4.5.0",
+    "@azure/search-documents": "^12.1.0",
+    "@trialpulse/shared": "*",
+    "jose": "^5.9.6",
+    "openai": "^4.73.0",
+    "uuid": "^11.0.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@types/node": "^22.9.0",
+    "eslint": "^9.39.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.68.0",
+    "vitest": "^3.2.6"
+  }
+}

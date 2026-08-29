@@ -1,0 +1,176 @@
+# gitleaks configuration for TrialPulse (PRD section 8.1).
+#
+# Posture: the default gitleaks rule set, plus rules for the specific credential
+# shapes this system would leak if someone took a shortcut, plus a small number
+# of narrowly-scoped allowlists. Every allowlist entry below names the exact
+# thing it permits and why. A blanket path exclusion is never acceptable here -
+# the whole point of the scan is that a rushed commit into a clinical system
+# cannot quietly ship a key.
+#
+# Validate a change to this file with:
+#   gitleaks detect --no-git --source . --config .gitleaks.toml --redact -v
+#   gitleaks detect          --source . --config .gitleaks.toml --redact -v
+
+title = "TrialPulse"
+
+[extend]
+useDefault = true
+
+# ---------------------------------------------------------------------------
+# TrialPulse-specific rules
+# ---------------------------------------------------------------------------
+
+[[rules]]
+id = "azure-storage-connection-string"
+description = "Azure Storage or Service Bus connection string containing an embedded account key"
+regex = '''(?i)(?:AccountKey|SharedAccessKey)\s*=\s*[A-Za-z0-9+/]{40,}={0,2}'''
+keywords = ["accountkey", "sharedaccesskey"]
+tags = ["azure", "storage", "key"]
+
+[[rules]]
+id = "azure-cosmos-primary-key"
+description = "Cosmos DB account key (88-character base64). TrialPulse sets disableLocalAuth on Cosmos, so any key in the tree is either stale or someone reverted the security posture."
+regex = '''(?i)(?:cosmos|documentdb)[^\n]{0,40}['"\s:=]([A-Za-z0-9+/]{86}==)['"\s]'''
+keywords = ["cosmos", "documentdb"]
+tags = ["azure", "cosmos", "key"]
+
+[[rules]]
+id = "azure-openai-api-key"
+description = "Azure OpenAI / Cognitive Services key (32 hex characters) assigned near an OpenAI identifier"
+regex = '''(?i)(?:azure[_-]?openai|cognitiveservices|openai)[^\n]{0,40}['"\s:=]([a-f0-9]{32})['"\s]'''
+keywords = ["openai", "cognitiveservices"]
+tags = ["azure", "openai", "key"]
+
+[[rules]]
+id = "azure-search-admin-key"
+description = "Azure AI Search admin or query key assigned near a search identifier"
+regex = '''(?i)(?:search)[^\n]{0,40}(?:api[_-]?key|admin[_-]?key|query[_-]?key)['"\s:=]{1,4}([A-Za-z0-9]{32,52})['"\s]'''
+keywords = ["searchapikey", "search", "adminkey"]
+tags = ["azure", "search", "key"]
+
+[[rules]]
+id = "entra-client-secret"
+description = "Microsoft Entra ID application client secret (the 'xyz8Q~...' value format)"
+regex = '''\b[a-zA-Z0-9_~.\-]{3}8Q~[a-zA-Z0-9_~.\-]{30,40}\b'''
+keywords = ["8Q~"]
+tags = ["azure", "entra", "secret"]
+
+[[rules]]
+id = "jwt-bearer-token"
+description = "Serialised JWT. A captured Entra access token in the repository is a live credential until it expires."
+regex = '''\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}'''
+keywords = ["eyJ"]
+tags = ["jwt", "token"]
+  [rules.allowlist]
+  description = "Unsigned/synthetic JWTs built by the local auth harness and its tests are not credentials: no Entra key ever signed them."
+  regexes = [
+    '''eyJhbGciOiJub25lIi[A-Za-z0-9_-]*''',
+  ]
+
+[[rules]]
+id = "sharepoint-client-state"
+description = "SharePoint change-notification clientState committed as a literal. It is the only shared secret in the system and belongs in Key Vault."
+regex = '''(?i)(?:client[_-]?state)\s*[:=]\s*['"][^'"\n]{12,}['"]'''
+keywords = ["clientstate", "client_state"]
+tags = ["sharepoint", "secret"]
+  [rules.allowlist]
+  description = """
+  Key Vault references and environment-variable indirection are the correct
+  pattern, not a leak. Unit tests are allowed a literal because asserting on
+  configuration loading requires one; the value must be an obvious placeholder,
+  which the regex list below enforces in every other file too.
+  """
+  paths = ['''\.test\.(ts|tsx|js|py)$''', '''(^|/)tests?/''']
+  regexes = [
+    '''@Microsoft\.KeyVault\(''',
+    '''process\.env''',
+    '''os\.environ''',
+    # Values that are self-evidently placeholders. A real clientState is a
+    # random 32+ character token; none of these could be mistaken for one.
+    '''(?i)(super-secret|not-a-real|placeholder|changeme|change-me|dummy|sample|fake|example)''',
+    '''(?i)(local[_-]?dev|dev[_-]only|localhost|for[_-]testing)''',
+  ]
+
+[[rules]]
+id = "meridian-personal-email"
+description = "Corporate e-mail address that looks like a named individual. TrialPulse fixtures, documentation and the synthetic corpus must use placeholder addresses so that a test data set never carries real personnel data."
+regex = '''\b[a-z]+\.[a-z]+@meridian\.com\b'''
+keywords = ["@meridiantx.com"]
+tags = ["pii"]
+  [rules.allowlist]
+  description = """
+  Two categories are permitted.
+
+  (1) Obviously-synthetic local parts. someone.else, dev.user, jane.doe and
+  friends are placeholders by construction and nobody is going to mistake them
+  for a colleague. Anything NOT on this list still trips the rule, which is the
+  point: inventing a realistic-looking name at a real company is exactly the
+  habit this rule exists to break.
+
+  (2) One tracked exception. TRIALPULSE-PRD.md section 4.1 ships an example
+  audit record containing dana.whitfield@meridiantx.com. The PRD is the immutable
+  source specification for this build and is not edited by the implementation,
+  so it is allowlisted by path. That address was then copied into several
+  TypeScript fixtures; those are allowlisted by value rather than by path so the
+  exception stays enumerable and visible. Replacing every fixture address with
+  @example.com and deleting the second regex below is tracked work, not a
+  resolved issue.
+  """
+  paths = ['''TRIALPULSE-PRD\.md''']
+  regexes = [
+    # (1) placeholder-shaped local parts
+    '''(?i)\b(someone|somebody|anyone|dev|test|tester|demo|sample|example|user|users|fake|dummy|placeholder|qa|ops|admin|support|first|jane|john|no|not)\.[a-z]+@meridian\.com\b''',
+    '''(?i)\b[a-z]+\.(doe|else|user|test|tester|example|placeholder|sample|dev|admin|one|two)@meridian\.com\b''',
+    # (2) tracked exception, see description
+    '''claire\.whitfield@meridian\.com''',
+  ]
+
+# ---------------------------------------------------------------------------
+# Global allowlist
+# ---------------------------------------------------------------------------
+
+[allowlist]
+description = "Repository-wide exceptions"
+
+paths = [
+  # Generated or vendored; nothing here is authored in this repository.
+  '''(^|/)node_modules/''',
+  '''(^|/)dist/''',
+  '''(^|/)coverage/''',
+  '''(^|/)\.venv/''',
+  '''(^|/)__pycache__/''',
+  '''package-lock\.json$''',
+  # Compiled ARM output from `az bicep build`, if anyone leaves one behind.
+  '''^infra/.*\.json\.build$''',
+]
+
+regexes = [
+  # Azure built-in role definition GUIDs. These are public, tenant-independent
+  # identifiers documented by Microsoft; they are the opposite of secret, but
+  # they trip the generic high-entropy rule. Listed explicitly rather than
+  # allowlisting infra/ wholesale.
+  '''1407120a-92aa-4202-b7e9-c0e197c71c8f''', # Search Index Data Reader
+  '''8ebe5a00-799e-43f5-93ac-243d3dce84a7''', # Search Index Data Contributor
+  '''7ca78c08-252a-4471-8644-bb5ff32d4ba0''', # Search Service Contributor
+  '''5e0bd9bd-7b93-4f28-af87-19fc36ad61bd''', # Cognitive Services OpenAI User
+  '''4633458b-17de-408a-b874-0445c86b69e6''', # Key Vault Secrets User
+  '''b7e6dc6d-f1e8-4753-8033-0f276bb0955b''', # Storage Blob Data Owner
+  '''974c5e8b-45b9-4653-ba55-5f855dd0fb88''', # Storage Queue Data Contributor
+  '''c6a89b2d-59bc-44d0-9896-0f6e12d7b80a''', # Storage Queue Data Message Sender
+  '''00000000-0000-0000-0000-00000000000[0-9]''', # Cosmos built-in data roles and null-GUID placeholders
+
+  # Deliberate placeholders used throughout the templates and documentation.
+  '''<your-[a-z-]+>''',
+  '''REPLACE[_-]ME''',
+  '''example\.(com|sharepoint\.com)''',
+]
+
+# SHA-256 content hashes are a core domain concept here (PRD decision 2): every
+# chunk carries one, and the synthetic corpus manifest and eval fixtures are
+# full of them. They are derived from public synthetic text and are not secrets.
+stopwords = [
+  "content_hash",
+  "query_hash",
+  "previous_version_hash",
+  "sha256",
+]

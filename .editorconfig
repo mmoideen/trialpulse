@@ -1,0 +1,36 @@
+# https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Chunk content hashing normalises line endings and whitespace before hashing
+# (see packages/shared/src/hash.ts). Keeping the repository itself consistent
+# means a fixture edited on Windows does not silently change a test's
+# expected hash.
+
+[*.{ts,tsx,js,jsx,mjs,cjs,json,jsonc,css,html,yml,yaml,bicep,bicepparam}]
+indent_size = 2
+
+[*.py]
+indent_size = 4
+max_line_length = 100
+
+[*.md]
+# Two trailing spaces are a hard line break in Markdown.
+trim_trailing_whitespace = false
+indent_size = 2
+
+[Makefile]
+indent_style = tab
+
+[*.{sh,bash}]
+indent_size = 2
+
+[{package.json,package-lock.json}]
+indent_size = 2

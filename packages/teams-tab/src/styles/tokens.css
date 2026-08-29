@@ -1,0 +1,130 @@
+/**
+ * TrialPulse design tokens.
+ *
+ * These CSS custom properties are the ONLY source of colour in the app.
+ * Values are set here as the light-theme default (so the app never flashes
+ * unstyled) and are overwritten at runtime by src/teams/theme.ts in response
+ * to Teams' theme-change events (default / dark / contrast).
+ *
+ * Contrast ratios (verified against WCAG 2.1 AA, 4.5:1 for text):
+ *  - fg/bg               15.5:1
+ *  - muted fg/bg          6.8:1
+ *  - accent-fg/accent-bg  9.4:1
+ *  - status pairs         7.6:1 - 10.1:1
+ */
+:root {
+  color-scheme: light;
+
+  --tp-color-bg: #ffffff;
+  --tp-color-bg-subtle: #f5f5f5;
+  --tp-color-bg-raised: #ffffff;
+  --tp-color-fg: #242424;
+  --tp-color-fg-muted: #5b5b5b;
+  --tp-color-border: #d1d1d1;
+  --tp-color-border-strong: #8a8a8a;
+
+  --tp-color-accent: #3f3d8a;
+  --tp-color-accent-fg: #ffffff;
+  --tp-color-accent-subtle-bg: #eceafd;
+
+  --tp-color-danger: #a4262c;
+  --tp-color-danger-bg: #fdf3f4;
+  --tp-color-danger-fg: #5c0a0a;
+
+  --tp-color-info-bg: #eff6fc;
+  --tp-color-info-fg: #1a3d5c;
+  --tp-color-info-border: #b4d6ef;
+
+  --tp-color-focus-ring: #3f3d8a;
+
+  --tp-status-pending-bg: #e4e4e4;
+  --tp-status-pending-fg: #3d3d3d;
+  --tp-status-indexed-bg: #c9f0c9;
+  --tp-status-indexed-fg: #0b3d0b;
+  --tp-status-failed-bg: #f8d2d2;
+  --tp-status-failed-fg: #5c0a0a;
+  --tp-status-outdated-bg: #faeab0;
+  --tp-status-outdated-fg: #5c4400;
+
+  --tp-chart-1: #4c6ef5;
+  --tp-chart-2: #12b886;
+  --tp-chart-3: #f76707;
+  --tp-chart-4: #ae3ec9;
+  --tp-chart-5: #e64980;
+  --tp-chart-6: #82c91e;
+  --tp-chart-cost-line: #3f3d8a;
+  --tp-chart-budget-line: #a4262c;
+  --tp-chart-grid: #e1e1e1;
+
+  --tp-space-1: 4px;
+  --tp-space-2: 8px;
+  --tp-space-3: 12px;
+  --tp-space-4: 16px;
+  --tp-space-5: 24px;
+  --tp-space-6: 32px;
+  --tp-space-7: 48px;
+
+  --tp-radius-sm: 4px;
+  --tp-radius-md: 8px;
+  --tp-radius-pill: 999px;
+
+  --tp-font-family:
+    'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --tp-font-size-sm: 12px;
+  --tp-font-size-base: 14px;
+  --tp-font-size-md: 16px;
+  --tp-font-size-lg: 20px;
+  --tp-font-size-xl: 24px;
+
+  --tp-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.08), 0 1px 8px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--tp-font-family);
+  font-size: var(--tp-font-size-base);
+  color: var(--tp-color-fg);
+  background: var(--tp-color-bg);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--tp-color-accent);
+}
+
+/* Visible focus ring on every interactive element, in every theme. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--tp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+button {
+  font-family: inherit;
+}
+
+.tp-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

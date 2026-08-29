@@ -1,0 +1,299 @@
+{
+  "$comment": "Synthetic clinical corpus for TrialPulse local development, tests and evaluation. Entirely fabricated. Contains no real patient data and no confidential Meridian Therapeutics information. Facts listed here MUST appear in the generated document body verbatim so that the eval judges can assert on them.",
+  "corpus_version": "1.0.0",
+  "study_context": {
+    "primary_study": "AXIOM-HN01",
+    "secondary_study": "AXIOM-HN02",
+    "investigational_product": "revarafusp alfa",
+    "indication": "recurrent/metastatic head and neck squamous cell carcinoma (R/M HNSCC)",
+    "sponsor": "Meridian Therapeutics (synthetic data set)",
+    "ind_number": "IND 145678"
+  },
+  "documents": [
+    {
+      "document_id": "sp-prot-0001",
+      "filename": "protocol-axiom-hn01-v3.0.md",
+      "title": "AXIOM-HN01 Protocol v3.0",
+      "classification": "protocol",
+      "version": "3.0",
+      "effective_date": "2025-11-14",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Study Design", "page": 1, "facts": ["AXIOM-HN01 is a randomized, double-blind, placebo-controlled Phase 3 study.", "Planned enrollment is 480 participants across 92 sites.", "Participants are randomized 1:1 to revarafusp alfa plus torilizumab or placebo plus torilizumab."] },
+        { "heading": "2. Primary Endpoint", "page": 3, "facts": ["The primary endpoint is overall survival (OS) in the PD-L1 CPS greater than or equal to 1 population.", "The study is powered at 90% to detect a hazard ratio of 0.70."] },
+        { "heading": "3. Key Inclusion Criteria", "page": 5, "facts": ["Participants must be at least 18 years of age.", "ECOG performance status must be 0 or 1.", "Participants must have measurable disease per RECIST v1.1."] },
+        { "heading": "4. Dose and Administration", "page": 9, "facts": ["Revarafusp alfa is administered at 1500 mg intravenously every 3 weeks.", "Torilizumab is administered at 200 mg intravenously every 3 weeks."] },
+        { "heading": "5. Interim Analysis", "page": 14, "facts": ["A single interim analysis is planned after 60% of target OS events.", "The interim analysis is reviewed by an independent Data Monitoring Committee."] }
+      ]
+    },
+    {
+      "document_id": "sp-prot-0002",
+      "filename": "protocol-axiom-hn01-v4.0.md",
+      "title": "AXIOM-HN01 Protocol v4.0",
+      "classification": "protocol",
+      "version": "4.0",
+      "effective_date": "2026-06-02",
+      "site_code": null,
+      "supersedes": "sp-prot-0001",
+      "sections": [
+        { "heading": "1. Study Design", "page": 1, "facts": ["AXIOM-HN01 is a randomized, double-blind, placebo-controlled Phase 3 study.", "Planned enrollment is increased to 528 participants across 104 sites.", "Participants are randomized 1:1 to revarafusp alfa plus torilizumab or placebo plus torilizumab."] },
+        { "heading": "2. Primary Endpoint", "page": 3, "facts": ["The primary endpoint is overall survival (OS) in the PD-L1 CPS greater than or equal to 1 population.", "Progression-free survival was elevated from an exploratory endpoint to a key secondary endpoint in version 4.0.", "The study is powered at 90% to detect a hazard ratio of 0.70."] },
+        { "heading": "3. Key Inclusion Criteria", "page": 5, "facts": ["Participants must be at least 18 years of age.", "ECOG performance status must be 0 or 1.", "Participants must have measurable disease per RECIST v1.1.", "Version 4.0 permits enrollment of participants with treated, stable brain metastases."] },
+        { "heading": "4. Dose and Administration", "page": 9, "facts": ["Revarafusp alfa is administered at 1500 mg intravenously every 3 weeks.", "Torilizumab is administered at 200 mg intravenously every 3 weeks.", "Version 4.0 adds a mandatory 60-minute observation period after the first infusion."] },
+        { "heading": "5. Interim Analysis", "page": 14, "facts": ["Version 4.0 adds a second interim analysis after 40% of target OS events.", "The interim analysis is reviewed by an independent Data Monitoring Committee."] },
+        { "heading": "6. Summary of Changes from Version 3.0", "page": 21, "facts": ["Enrollment increased from 480 to 528 participants.", "Site count increased from 92 to 104.", "Brain metastases exclusion criterion was relaxed.", "A second interim analysis was added.", "A 60-minute post-infusion observation period was added."] }
+      ]
+    },
+    {
+      "document_id": "sp-prot-0003",
+      "filename": "protocol-axiom-hn02-v1.0.md",
+      "title": "AXIOM-HN02 Protocol v1.0",
+      "classification": "protocol",
+      "version": "1.0",
+      "effective_date": "2026-03-10",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Study Design", "page": 1, "facts": ["AXIOM-HN02 is an open-label Phase 2 study in first-line locally advanced HNSCC.", "Planned enrollment is 120 participants across 28 sites."] },
+        { "heading": "2. Primary Endpoint", "page": 3, "facts": ["The primary endpoint of AXIOM-HN02 is objective response rate per RECIST v1.1."] },
+        { "heading": "3. Dose and Administration", "page": 7, "facts": ["Revarafusp alfa is administered at 1500 mg intravenously every 2 weeks in AXIOM-HN02."] }
+      ]
+    },
+    {
+      "document_id": "sp-ib-0001",
+      "filename": "investigator-brochure-edition-5.md",
+      "title": "Revarafusp Alfa Investigator Brochure Edition 5",
+      "classification": "investigator_brochure",
+      "version": "5.0",
+      "effective_date": "2025-09-30",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "2. Mechanism of Action", "page": 4, "facts": ["Revarafusp alfa is a bifunctional antibody targeting EGFR and TGF-beta.", "The EGFR arm is a high-affinity IgG1 and the TGF-beta arm is a ligand trap."] },
+        { "heading": "5. Reference Safety Information", "page": 18, "facts": ["The expected adverse reactions include acneiform dermatitis, infusion-related reactions, and hypomagnesemia.", "Edition 5 lists Grade 3 or higher acneiform dermatitis at an incidence of 11 percent."] }
+      ]
+    },
+    {
+      "document_id": "sp-ib-0002",
+      "filename": "investigator-brochure-edition-6.md",
+      "title": "Revarafusp Alfa Investigator Brochure Edition 6",
+      "classification": "investigator_brochure",
+      "version": "6.0",
+      "effective_date": "2026-05-18",
+      "site_code": null,
+      "supersedes": "sp-ib-0001",
+      "sections": [
+        { "heading": "2. Mechanism of Action", "page": 4, "facts": ["Revarafusp alfa is a bifunctional antibody targeting EGFR and TGF-beta.", "The EGFR arm is a high-affinity IgG1 and the TGF-beta arm is a ligand trap."] },
+        { "heading": "5. Reference Safety Information", "page": 19, "facts": ["Edition 6 adds Grade 3 or higher hypertension as an identified risk.", "Edition 6 revises Grade 3 or higher acneiform dermatitis incidence to 13 percent.", "Infusion-related reactions remain an identified risk requiring premedication."] },
+        { "heading": "7. Guidance for the Investigator", "page": 27, "facts": ["Investigators must hold dosing for Grade 3 acneiform dermatitis until recovery to Grade 1 or lower.", "Magnesium levels should be monitored every cycle."] }
+      ]
+    },
+    {
+      "document_id": "sp-reg-0001",
+      "filename": "ind-145678-annual-report-2026.md",
+      "title": "IND 145678 Annual Report 2026",
+      "classification": "regulatory_submission",
+      "version": "1.0",
+      "effective_date": "2026-04-15",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Summary of Clinical Progress", "page": 1, "facts": ["As of 31 March 2026, impacted studies under IND 145678 have enrolled 412 participants cumulatively.", "Two studies were active during the reporting period: AXIOM-HN01 and AXIOM-HN02."] },
+        { "heading": "3. Changes in the Investigator Brochure", "page": 6, "facts": ["Investigator Brochure Edition 6 was distributed to all active sites in May 2026."] }
+      ]
+    },
+    {
+      "document_id": "sp-reg-0002",
+      "filename": "ind-amendment-12.md",
+      "title": "IND 145678 Amendment 12 - Protocol v4.0",
+      "classification": "regulatory_submission",
+      "version": "1.0",
+      "effective_date": "2026-06-09",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Purpose of Amendment", "page": 1, "facts": ["Amendment 12 submits AXIOM-HN01 Protocol version 4.0 to the FDA.", "Amendment 12 was submitted on 09 June 2026 and the 30-day review period ended on 09 July 2026."] },
+        { "heading": "2. Pending Amendments", "page": 2, "facts": ["Amendment 13 covering the updated statistical analysis plan is pending and targeted for submission in September 2026.", "Amendment 14 covering the AXIOM-HN02 dose expansion cohort is pending internal review."] }
+      ]
+    },
+    {
+      "document_id": "sp-reg-0003",
+      "filename": "pre-nda-meeting-request.md",
+      "title": "Pre-NDA Meeting Request Package",
+      "classification": "regulatory_submission",
+      "version": "1.0",
+      "effective_date": "2026-07-21",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Meeting Request", "page": 1, "facts": ["Meridian requests a Type B pre-NDA meeting with the FDA Division of Oncology 2.", "The pre-NDA meeting is scheduled for 12 November 2026.", "The meeting package is due to the FDA 30 days in advance, on 13 October 2026."] },
+        { "heading": "2. Questions for the Agency", "page": 4, "facts": ["Question 1 asks whether the proposed OS analysis population is acceptable for registration.", "Question 3 asks whether the immunogenicity assay validation package is sufficient."] }
+      ]
+    },
+    {
+      "document_id": "sp-reg-0004",
+      "filename": "fda-type-b-meeting-minutes.md",
+      "title": "FDA Type B Meeting Minutes - End of Phase 2",
+      "classification": "regulatory_submission",
+      "version": "1.0",
+      "effective_date": "2025-10-08",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Attendees", "page": 1, "facts": ["The meeting was held on 08 October 2025 with the FDA Division of Oncology 2.", "The Meridian regulatory lead of record is Alina Ferreira."] },
+        { "heading": "2. Agency Feedback", "page": 3, "facts": ["The Agency agreed that overall survival is an acceptable primary endpoint.", "The Agency recommended that progression-free survival be collected as a key secondary endpoint."] }
+      ]
+    },
+    {
+      "document_id": "sp-saf-0001",
+      "filename": "quarterly-safety-report-q2-2026.md",
+      "title": "Quarterly Safety Report Q2 2026",
+      "classification": "safety_report",
+      "version": "1.0",
+      "effective_date": "2026-07-10",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "2. Aggregate Adverse Events by System Organ Class", "page": 2, "facts": ["Skin and subcutaneous tissue disorders were reported in 218 events during Q2 2026.", "Gastrointestinal disorders were reported in 141 events during Q2 2026.", "Metabolism and nutrition disorders were reported in 96 events during Q2 2026.", "Vascular disorders were reported in 47 events during Q2 2026."] },
+        { "heading": "3. Serious Adverse Events", "page": 5, "facts": ["There were 34 serious adverse events reported in Q2 2026.", "Six serious adverse events were assessed as related to revarafusp alfa.", "There were no treatment-related deaths in Q2 2026."] },
+        { "heading": "4. Narrative Summaries", "page": 8, "facts": ["Participant 014-0032, a 61-year-old male, experienced Grade 4 infusion-related reaction on Cycle 1 Day 1.", "Participant 027-0011, initials J.M., experienced Grade 3 hypertension requiring dose interruption."] }
+      ]
+    },
+    {
+      "document_id": "sp-saf-0002",
+      "filename": "dsur-2026.md",
+      "title": "Development Safety Update Report 2026",
+      "classification": "safety_report",
+      "version": "1.0",
+      "effective_date": "2026-05-30",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "3. Cumulative Exposure", "page": 4, "facts": ["Cumulative exposure across the revarafusp alfa program is 1,284 participant-years as of 31 March 2026."] },
+        { "heading": "6. Signal Evaluation", "page": 11, "facts": ["Hypertension was evaluated as an emerging safety signal and added to the reference safety information.", "No new signal was identified for hepatotoxicity during the reporting period."] }
+      ]
+    },
+    {
+      "document_id": "sp-saf-0003",
+      "filename": "susar-line-listing-q2-2026.md",
+      "title": "SUSAR Line Listing Q2 2026",
+      "classification": "safety_report",
+      "version": "1.0",
+      "effective_date": "2026-07-05",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Line Listing", "page": 1, "facts": ["Three SUSARs were reported in Q2 2026 and all were expedited to the FDA within 15 calendar days.", "Participant 003-0007, date of birth 14 March 1958, experienced a Grade 4 pneumonitis SUSAR."] }
+      ]
+    },
+    {
+      "document_id": "sp-site-0001",
+      "filename": "site-us-014-monitoring-visit-followup.md",
+      "title": "Site US-014 Monitoring Visit Follow-up Letter",
+      "classification": "site_communication",
+      "version": "1.0",
+      "effective_date": "2026-06-20",
+      "site_code": "US-014",
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Visit Summary", "page": 1, "facts": ["An interim monitoring visit was conducted at site US-014 on 18 June 2026.", "Source data verification was completed for 12 of 12 enrolled participants."] },
+        { "heading": "2. Action Items", "page": 2, "facts": ["Site US-014 must file the updated delegation of authority log within 10 business days.", "Two informed consent forms at site US-014 require re-consent to Protocol version 4.0."] }
+      ]
+    },
+    {
+      "document_id": "sp-site-0002",
+      "filename": "site-us-027-protocol-deviation-notice.md",
+      "title": "Site US-027 Protocol Deviation Notice",
+      "classification": "site_communication",
+      "version": "1.0",
+      "effective_date": "2026-05-29",
+      "site_code": "US-027",
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Deviation Description", "page": 1, "facts": ["Site US-027 reported a major protocol deviation on 27 May 2026 involving an out-of-window tumor assessment.", "The tumor assessment was performed 11 days outside the protocol-specified window."] },
+        { "heading": "2. Corrective and Preventive Action", "page": 2, "facts": ["Site US-027 must retrain all study coordinators on visit windows by 30 June 2026."] }
+      ]
+    },
+    {
+      "document_id": "sp-site-0003",
+      "filename": "investigator-newsletter-june-2026.md",
+      "title": "AXIOM Investigator Newsletter June 2026",
+      "classification": "site_communication",
+      "version": "1.0",
+      "effective_date": "2026-06-01",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Protocol Version 4.0 Rollout", "page": 1, "facts": ["Protocol version 4.0 became effective on 02 June 2026 and all sites must implement it after IRB approval.", "Sites should submit Protocol version 4.0 to their IRB within 14 days of receipt."] },
+        { "heading": "2. Enrollment Update", "page": 2, "facts": ["Cumulative AXIOM-HN01 enrollment reached 366 participants as of 31 May 2026."] }
+      ]
+    },
+    {
+      "document_id": "sp-site-0004",
+      "filename": "site-eu-003-enrollment-reminder.md",
+      "title": "Site EU-003 Enrollment Reminder",
+      "classification": "site_communication",
+      "version": "1.0",
+      "effective_date": "2026-06-12",
+      "site_code": "EU-003",
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Enrollment Status", "page": 1, "facts": ["Site EU-003 has enrolled 4 participants against a target of 9 participants.", "Site EU-003 is asked to submit a recruitment mitigation plan by 15 July 2026."] }
+      ]
+    },
+    {
+      "document_id": "sp-ci-0001",
+      "filename": "hnscc-competitive-landscape-q2-2026.md",
+      "title": "HNSCC Competitive Landscape Q2 2026",
+      "classification": "competitive_intelligence",
+      "version": "1.0",
+      "effective_date": "2026-07-01",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Late-Stage Competitors", "page": 1, "facts": ["Four bispecific programs are in Phase 3 development for first-line R/M HNSCC as of Q2 2026.", "Torilizumab monotherapy remains the standard of care comparator in first-line PD-L1 positive disease."] },
+        { "heading": "3. Readout Timing", "page": 5, "facts": ["The nearest competitor Phase 3 overall survival readout is projected for the second half of 2027."] }
+      ]
+    },
+    {
+      "document_id": "sp-ci-0002",
+      "filename": "torilizumab-combination-tracker.md",
+      "title": "Torilizumab Combination Trials Tracker",
+      "classification": "competitive_intelligence",
+      "version": "1.0",
+      "effective_date": "2026-06-15",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Active Combination Studies", "page": 1, "facts": ["Twenty-two active torilizumab combination studies in HNSCC were identified in June 2026.", "Nine of those studies are sponsored by academic consortia."] }
+      ]
+    },
+    {
+      "document_id": "sp-ci-0003",
+      "filename": "egfr-lgr5-bispecific-competitive-brief.md",
+      "title": "Competitor Brief - EGFR/LGR5 Bispecific Program",
+      "classification": "competitive_intelligence",
+      "version": "1.0",
+      "effective_date": "2026-06-28",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "1. Program Overview", "page": 1, "facts": ["The competing EGFR/LGR5 bispecific reported a 63 percent objective response rate in a Phase 2 first-line cohort.", "The competing program initiated its Phase 3 study in March 2026."] }
+      ]
+    },
+    {
+      "document_id": "sp-ci-0004",
+      "filename": "market-access-landscape-2026.md",
+      "title": "Market Access Landscape HNSCC 2026",
+      "classification": "competitive_intelligence",
+      "version": "1.0",
+      "effective_date": "2026-05-05",
+      "site_code": null,
+      "supersedes": null,
+      "sections": [
+        { "heading": "2. Payer Considerations", "page": 3, "facts": ["US payers are expected to require PD-L1 CPS testing as a coverage condition for combination therapy.", "The estimated annualized cost of care for first-line R/M HNSCC combination therapy is 214,000 US dollars."] }
+      ]
+    }
+  ]
+}

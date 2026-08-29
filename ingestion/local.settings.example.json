@@ -1,0 +1,24 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+
+    "TRIALPULSE_LOCAL_DEV": "true",
+    "TRIALPULSE_INGEST_QUEUE": "ingestion-work",
+    "TRIALPULSE_DEAD_LETTER_QUEUE": "ingestion-work-poison",
+
+    "AZURE_SEARCH_ENDPOINT": "https://<your-search-service>.search.windows.net",
+    "AZURE_SEARCH_INDEX_NAME": "trialpulse-chunks",
+
+    "AZURE_OPENAI_EMBEDDING_ENDPOINT": "https://<your-openai-resource>.openai.azure.com",
+    "AZURE_OPENAI_EMBEDDING_DEPLOYMENT": "text-embedding-3-large",
+
+    "SHAREPOINT_SITE_ID": "<graph-site-id>",
+    "SHAREPOINT_DRIVE_ID": "<graph-drive-id>",
+    "SHAREPOINT_WEBHOOK_CLIENT_STATE": "<random-shared-secret, store the real value in Key Vault>",
+
+    "COSMOS_ENDPOINT": "https://<your-cosmos-account>.documents.azure.com:443/",
+    "COSMOS_DATABASE_NAME": "trialpulse"
+  }
+}

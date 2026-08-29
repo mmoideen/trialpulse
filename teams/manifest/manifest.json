@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "${{VERSION}}",
+  "id": "${{TEAMS_APP_ID}}",
+  "developer": {
+    "name": "Meridian Therapeutics",
+    "websiteUrl": "https://www.meridiantx.com",
+    "privacyUrl": "https://www.meridiantx.com/privacy",
+    "termsOfUseUrl": "https://www.meridiantx.com/terms"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "TrialPulse",
+    "full": "TrialPulse - Meridian Clinical Document Intelligence"
+  },
+  "description": {
+    "short": "Cited, role-scoped answers from Meridian's clinical document corpus.",
+    "full": "TrialPulse gives Meridian Therapeutics clinical, regulatory, and medical affairs staff instant, cited answers drawn from Meridian's protocols, investigator brochures, regulatory submissions, safety reports, and site communications, without leaving Microsoft Teams. Every answer carries a verifiable citation back to the source document and page, and access is enforced by role so a site monitor can never see unblinded data a regulatory affairs specialist can. All data stays inside Meridian's Microsoft 365 tenant."
+  },
+  "accentColor": "#3F3D8A",
+  "staticTabs": [
+    {
+      "entityId": "trialpulse",
+      "name": "TrialPulse",
+      "contentUrl": "${{TAB_ENDPOINT}}/index.html",
+      "websiteUrl": "${{TAB_ENDPOINT}}/index.html",
+      "scopes": ["personal"]
+    }
+  ],
+  "bots": [
+    {
+      "botId": "${{BOT_APP_ID}}",
+      "scopes": ["personal"],
+      "supportsFiles": false,
+      "isNotificationOnly": false,
+      "commandLists": [
+        {
+          "scopes": ["personal"],
+          "commands": [
+            {
+              "title": "Ask about a protocol",
+              "description": "e.g. \"What changed between protocol version 3.0 and 4.0?\""
+            },
+            {
+              "title": "Ask about safety data",
+              "description": "e.g. \"Summarize safety events for revarafusp alfa in the last quarter.\""
+            },
+            {
+              "title": "Ask about a regulatory submission",
+              "description": "e.g. \"What IND amendments are pending?\""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": ["${{TAB_DOMAIN}}"],
+  "webApplicationInfo": {
+    "id": "${{AAD_APP_CLIENT_ID}}",
+    "resource": "api://${{TAB_DOMAIN}}/${{AAD_APP_CLIENT_ID}}"
+  },
+  "copilotAgents": {
+    "declarativeAgents": [
+      {
+        "id": "trialpulse-agent",
+        "file": "declarativeAgent.json"
+      }
+    ]
+  }
+}

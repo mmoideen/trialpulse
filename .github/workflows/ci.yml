@@ -1,0 +1,312 @@
+# TrialPulse continuous integration.
+#
+# ACTION PINNING
+# --------------
+# Third-party actions are avoided entirely. Every `uses:` below refers to an
+# action published by GitHub itself (`actions/*`), pinned to a major version
+# tag. Tags are mutable, so a commit SHA is strictly stronger; the reason this
+# repository does not use SHAs today is that a SHA must be copied from the real
+# upstream repository and verified, and inventing one produces a workflow that
+# cannot run. `.github/dependabot.yml` watches the `github-actions` ecosystem,
+# and the intended end state is that Dependabot's first pass rewrites these to
+# pinned SHAs with version comments.
+#
+# Tools that would otherwise pull in a third-party action (gitleaks) are
+# installed from their upstream release archive at an explicitly pinned version
+# instead, so that the executed code is version-addressed even though the action
+# reference is not.
+#
+# FORKS
+# -----
+# No job reads a secret. Every job passes on a fork with no configuration.
+
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+# A second push to the same branch makes the first run's result irrelevant.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '20'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  node:
+    name: Node (build, typecheck, test)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      # @trialpulse/shared is consumed through its built dist/ by both the
+      # orchestrator and the Teams tab, so it has to be built before anything
+      # else can typecheck.
+      - name: Build shared package
+        run: npm run build --workspace @trialpulse/shared
+
+      - name: Typecheck all workspaces
+        run: npm run typecheck
+
+      - name: Lint all workspaces
+        run: npm run lint
+
+      - name: Test all workspaces
+        run: npm run test
+
+      - name: Build all workspaces
+        run: npm run build
+
+  python:
+    name: Python (ruff, pytest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          # ingestion/requirements-dev.txt does not exist in this repo: there
+          # is no separate dev-requirements file, and ruff/pytest are pinned
+          # and installed directly in the step below. Hashing only the file
+          # that actually exists avoids keying the pip cache off a path that
+          # never changes (and would silently stay wrong forever if a real
+          # requirements-dev.txt were later added without updating this line).
+          cache-dependency-path: ingestion/requirements.txt
+
+      - name: Install ingestion dependencies
+        run: |
+          set -euo pipefail
+          if [ ! -f ingestion/requirements.txt ]; then
+            echo "::error file=ingestion/requirements.txt::ingestion/requirements.txt is missing; the ingestion pipeline cannot be built or tested."
+            exit 1
+          fi
+          python -m pip install --upgrade pip
+          pip install -r ingestion/requirements.txt
+          if [ -f ingestion/requirements-dev.txt ]; then
+            pip install -r ingestion/requirements-dev.txt
+          fi
+          # Only install what the requirements files did not already provide, so
+          # this step can never silently downgrade a pinned version. Ruff is
+          # pinned because a new release adding a rule must not turn a green
+          # build red without anyone choosing to adopt it.
+          command -v ruff   >/dev/null 2>&1 || pip install 'ruff==0.16.5'
+          command -v pytest >/dev/null 2>&1 || pip install pytest
+
+      - name: ruff check
+        run: ruff check ingestion
+
+      - name: pytest
+        working-directory: ingestion
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -q
+
+  eval:
+    name: Golden evaluation gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Explicit: a regression in retrieval quality, citation accuracy, RBAC
+    # leakage or refusal correctness fails the build. This job is never advisory.
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      # Fail with a readable message rather than npm's "Missing script" if the
+      # eval harness has not landed yet. Silently passing is not an option: the
+      # whole point of this job is that nobody can merge a retrieval regression.
+      - name: Assert the evaluation harness exists
+        run: |
+          set -euo pipefail
+          node -e '
+            const pkg = require("./package.json");
+            if (!pkg.scripts || !pkg.scripts.eval) {
+              console.error("::error file=package.json::No \"eval\" script at the repo root. The golden evaluation suite is a required CI gate (PRD section 7, phase 4).");
+              process.exit(1);
+            }
+            if (!pkg.scripts.seed) {
+              console.error("::error file=package.json::No \"seed\" script at the repo root. The eval suite needs a seeded in-memory index.");
+              process.exit(1);
+            }
+          '
+          test -d eval || {
+            echo "::error::eval/ directory is missing. The golden query set and judges live there.";
+            exit 1;
+          }
+
+      - name: Build workspaces
+        run: npm run build
+
+      - name: Seed the deterministic local index
+        run: npm run seed
+
+      - name: Run golden evaluation
+        run: npm run eval
+
+      - name: Upload evaluation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results
+          path: |
+            eval/results/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  security:
+    name: Security (gitleaks, npm audit, pip-audit)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # gitleaks scans history, not just the working tree. A secret that was
+          # committed and then removed is still a leaked secret.
+          fetch-depth: 0
+
+      # Installed from the upstream release archive rather than a third-party
+      # action: no marketplace action in the supply chain, no GITLEAKS_LICENSE
+      # requirement, and the executed binary is pinned to an exact version.
+      - name: Install gitleaks
+        env:
+          GITLEAKS_VERSION: 8.30.1
+          # SHA-256 taken from gitleaks_8.30.1_checksums.txt in the upstream
+          # release. This is the SHA pin that the `uses:` lines above cannot
+          # have without a verified upstream commit id.
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          set -euo pipefail
+          curl -sSfL -o /tmp/gitleaks.tar.gz \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  /tmp/gitleaks.tar.gz" | sha256sum --check --strict
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          sudo install -m 0755 /tmp/gitleaks /usr/local/bin/gitleaks
+          gitleaks version
+
+      - name: gitleaks (git history)
+        run: gitleaks detect --source . --config .gitleaks.toml --redact --verbose --no-banner
+
+      - name: gitleaks (working tree, including untracked files)
+        run: gitleaks detect --no-git --source . --config .gitleaks.toml --redact --verbose --no-banner
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      # Audits the whole tree, dev dependencies included. This was briefly
+      # scoped to `--omit=dev` while vite/vitest carried unpatched advisories
+      # (GHSA-4w7w-66w2-5vf9, GHSA-5xrq-8626-4rwp) reachable only through the
+      # test toolchain. Both are now on patched versions and the unscoped audit
+      # is clean, so the gate is back to covering everything a developer
+      # installs -- a compromised test runner runs with full repository access
+      # on every CI job, so "it does not ship" is not a reason to stop looking.
+      - name: npm audit
+        run: npm audit --audit-level=high
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: ingestion/requirements.txt
+
+      - name: pip-audit
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install 'pip-audit==2.7.3'
+          if [ ! -f ingestion/requirements.txt ]; then
+            echo "::error file=ingestion/requirements.txt::ingestion/requirements.txt is missing; dependencies cannot be audited."
+            exit 1
+          fi
+          pip-audit --requirement ingestion/requirements.txt
+
+  infra:
+    name: Infrastructure (bicep build + lint)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install the Bicep CLI
+        run: |
+          set -euo pipefail
+          az bicep install
+          az bicep version
+
+      # `az bicep build` writes warnings to stderr and still exits 0, so the
+      # output is captured and any diagnostic at all is treated as a failure.
+      # Warnings in IaC are usually a property name that ARM will silently
+      # ignore at deploy time, which is exactly the class of bug worth catching.
+      - name: bicep build (no warnings tolerated)
+        run: |
+          set -euo pipefail
+          status=0
+          for file in infra/main.bicep infra/modules/*.bicep; do
+            echo "==> $file"
+            if ! diagnostics=$(az bicep build --file "$file" --stdout 2>&1 >/dev/null); then
+              status=1
+            fi
+            if [ -n "$diagnostics" ]; then
+              echo "$diagnostics"
+              echo "::error file=$file::bicep build produced diagnostics"
+              status=1
+            fi
+          done
+          exit "$status"
+
+      - name: bicep lint
+        run: az bicep lint --file infra/main.bicep
+
+      - name: Validate parameter files against the compiled template
+        run: python3 infra/scripts/validate-parameters.py
+
+      # Guards against the failure mode where the orchestrator renames an
+      # environment variable and the deployment keeps succeeding while the app
+      # refuses to start. Cheap to run, and it catches a class of bug that only
+      # otherwise shows up at 3am after a release.
+      - name: Validate app settings against the application's required env vars
+        run: python3 infra/scripts/validate-app-settings.py
+
+      # Currently RED on purpose: infra/modules/alerts.bicep's costMetricName
+      # comment promises a customMetric named 'trialpulse.query.cost_usd' that
+      # packages/orchestrator/src/ does not emit (functions/deps.ts wires a
+      # NoopTelemetry sink), so the daily-cost denial-of-wallet alert can never
+      # fire while reporting as healthy. This step is what keeps that gap from
+      # going quiet again once it is closed; see docs/runbook.md and the
+      # orchestrator TelemetrySink follow-up it is tracked against.
+      - name: Validate alert telemetry names against orchestrator source
+        run: python3 infra/scripts/validate-telemetry-names.py

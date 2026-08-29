@@ -1,0 +1,11 @@
+.container {
+  padding: var(--tp-space-4);
+}
+
+.restricted {
+  padding: var(--tp-space-5);
+  text-align: center;
+  color: var(--tp-color-fg-muted);
+  background: var(--tp-color-bg-subtle);
+  border-radius: var(--tp-radius-md);
+}

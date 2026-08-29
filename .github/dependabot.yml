@@ -1,0 +1,71 @@
+# Dependency updates for TrialPulse.
+#
+# Grouping rationale: a clinical document system with a six-week build has more
+# to lose from twelve simultaneous single-dependency PRs than from a weekly
+# batch. Security updates are deliberately left ungrouped so they surface on
+# their own and can be merged without waiting for a batch to go green.
+
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/New_York
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - javascript
+    groups:
+      dev-tooling:
+        patterns:
+          - 'typescript'
+          - 'vitest'
+          - 'vite'
+          - '@vitejs/*'
+          - '@types/*'
+          - '@testing-library/*'
+          - 'jsdom'
+        update-types:
+          - minor
+          - patch
+      azure-sdk:
+        patterns:
+          - '@azure/*'
+        update-types:
+          - minor
+          - patch
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: pip
+    directory: /ingestion
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/New_York
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - python
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/New_York
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - ci

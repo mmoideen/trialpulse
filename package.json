@@ -1,0 +1,29 @@
+{
+  "name": "trialpulse",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TrialPulse - Teams-native clinical document intelligence for Meridian Therapeutics",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "packages/shared",
+    "packages/orchestrator",
+    "packages/teams-tab",
+    "eval"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "eval": "npm run eval -w @trialpulse/eval",
+    "seed": "npm run seed -w @trialpulse/orchestrator",
+    "dev": "npm run dev -w @trialpulse/orchestrator"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^3.2.6"
+  }
+}

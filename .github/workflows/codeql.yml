@@ -1,0 +1,59 @@
+# CodeQL static analysis for the TypeScript orchestrator / Teams tab and the
+# Python ingestion pipeline.
+#
+# Pinned to major version tags for the same reason as ci.yml: `github/codeql-action`
+# is published by GitHub, and Dependabot's `github-actions` ecosystem entry in
+# .github/dependabot.yml is responsible for moving these to pinned SHAs.
+#
+# On a pull request from a fork the token is read-only, so the SARIF upload is
+# skipped by the action rather than failing the job. No secret is required.
+
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly, so that a newly published query catches an old commit.
+    - cron: '17 4 * * 1'
+
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: javascript-typescript
+          - language: python
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # security-and-quality adds maintainability queries on top of the
+          # default security set. For a system whose whole value proposition is
+          # a correct authorisation filter, the extra noise is worth it.
+          queries: security-and-quality
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:${{ matrix.language }}'

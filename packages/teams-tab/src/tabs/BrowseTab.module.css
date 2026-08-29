@@ -1,0 +1,105 @@
+.container {
+  padding: var(--tp-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tp-space-5);
+}
+
+.searchRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tp-space-1);
+  max-width: 420px;
+}
+
+.searchInput {
+  padding: var(--tp-space-2) var(--tp-space-3);
+  font-size: var(--tp-font-size-base);
+  color: var(--tp-color-fg);
+  background: var(--tp-color-bg-raised);
+  border: 1px solid var(--tp-color-border);
+  border-radius: var(--tp-radius-sm);
+}
+
+.classificationSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tp-space-2);
+}
+
+.classificationTitle {
+  margin: 0;
+  font-size: var(--tp-font-size-md);
+  font-weight: 600;
+}
+
+.documentList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tp-space-2);
+}
+
+.documentRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tp-space-3);
+  padding: var(--tp-space-3);
+  background: var(--tp-color-bg-raised);
+  border: 1px solid var(--tp-color-border);
+  border-radius: var(--tp-radius-md);
+}
+
+.documentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.documentTitle {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.documentTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.documentTitle a:hover {
+  text-decoration: underline;
+}
+
+.documentMeta {
+  font-size: var(--tp-font-size-sm);
+  color: var(--tp-color-fg-muted);
+}
+
+.emptyState {
+  padding: var(--tp-space-4);
+  color: var(--tp-color-fg-muted);
+  background: var(--tp-color-bg-subtle);
+  border-radius: var(--tp-radius-md);
+  font-size: var(--tp-font-size-sm);
+}
+
+.state {
+  padding: var(--tp-space-5);
+  text-align: center;
+  color: var(--tp-color-fg-muted);
+}
+
+.errorState {
+  padding: var(--tp-space-5);
+  text-align: center;
+  color: var(--tp-color-danger-fg);
+  background: var(--tp-color-danger-bg);
+  border: 1px solid var(--tp-color-danger);
+  border-radius: var(--tp-radius-md);
+}

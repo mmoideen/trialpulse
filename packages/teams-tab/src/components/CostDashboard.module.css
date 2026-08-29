@@ -1,0 +1,51 @@
+.section {
+  margin-bottom: var(--tp-space-6);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--tp-space-3) 0;
+  font-size: var(--tp-font-size-md);
+  font-weight: 600;
+}
+
+.chartCard {
+  padding: var(--tp-space-4);
+  background: var(--tp-color-bg-raised);
+  border: 1px solid var(--tp-color-border);
+  border-radius: var(--tp-radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--tp-font-size-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--tp-space-2) var(--tp-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--tp-color-border);
+}
+
+.table th {
+  color: var(--tp-color-fg-muted);
+  font-weight: 600;
+}
+
+.state {
+  padding: var(--tp-space-5);
+  text-align: center;
+  color: var(--tp-color-fg-muted);
+  background: var(--tp-color-bg-subtle);
+  border-radius: var(--tp-radius-md);
+}
+
+.errorState {
+  padding: var(--tp-space-5);
+  text-align: center;
+  color: var(--tp-color-danger-fg);
+  background: var(--tp-color-danger-bg);
+  border: 1px solid var(--tp-color-danger);
+  border-radius: var(--tp-radius-md);
+}

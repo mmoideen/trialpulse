@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.2/schema.json",
+  "version": "v1.2",
+  "name": "TrialPulse",
+  "description": "Cited, role-scoped answers from Meridian Therapeutics' clinical document corpus -- protocols, investigator brochures, regulatory submissions, safety reports, and site communications.",
+  "instructions": "$[file('instructions.md')]",
+  "conversation_starters": [
+    {
+      "title": "Protocol changes",
+      "text": "What changed between protocol version 3.0 and 4.0?"
+    },
+    {
+      "title": "Safety signal quick look",
+      "text": "Summarize safety events for revarafusp alfa in the last quarter."
+    },
+    {
+      "title": "Regulatory tracker",
+      "text": "What IND amendments are pending?"
+    },
+    {
+      "title": "Trial status",
+      "text": "What is the status of the AXIOM-HN01 trial?"
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "OneDriveAndSharePoint",
+      "items_by_url": [
+        { "url": "${{SHAREPOINT_PROTOCOLS_LIBRARY_URL}}" },
+        { "url": "${{SHAREPOINT_INVESTIGATOR_BROCHURES_LIBRARY_URL}}" },
+        { "url": "${{SHAREPOINT_REGULATORY_SUBMISSIONS_LIBRARY_URL}}" },
+        { "url": "${{SHAREPOINT_SAFETY_REPORTS_LIBRARY_URL}}" },
+        { "url": "${{SHAREPOINT_SITE_COMMUNICATIONS_LIBRARY_URL}}" },
+        { "url": "${{SHAREPOINT_COMPETITIVE_INTELLIGENCE_LIBRARY_URL}}" }
+      ]
+    }
+  ]
+}
