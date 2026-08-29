@@ -96,13 +96,10 @@ class CosmosDocumentStatusStore:
     `/document_classification` (`infra/modules/cosmos.bicep`), matching
     the shape `azure-document-metadata.ts` queries.
 
-    NOTE (see ingestion/README.md, "Remaining production wiring"):
-    `infra/main.bicep` does not yet pass `COSMOS_ENDPOINT`/
-    `COSMOS_DATABASE_NAME` app settings, nor a Cosmos DB data-plane role
-    assignment, to the *ingestion* Function App (only to the
-    orchestrator's). `function_app.get_document_status_store()` reads
-    those same two setting names so wiring them up on the ingestion app is
-    a small, symmetric infra change -- outside this package's ownership.
+    `infra/main.bicep` supplies `COSMOS_ENDPOINT`/`COSMOS_DATABASE_NAME`
+    to the ingestion Function App, and `infra/modules/rbac.bicep`'s
+    `ingestionCosmosDocumentsContributor` scopes its data-plane role to
+    the `documents` container alone.
     """
 
     _CONTAINER_NAME = "documents"

@@ -1,7 +1,7 @@
 # TrialPulse ingestion pipeline dependencies, pinned.
 #
 # Runtime (Azure Functions host + pipeline):
-azure-functions==2.3.0
+azure-functions==1.25.0
 azure-identity==1.25.3
 azure-search-documents==12.0.0
 # Used by function_app._enqueue_via_queue_client (the delta sync's

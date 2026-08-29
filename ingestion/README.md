@@ -179,10 +179,9 @@ and this is that statement.
 
 ## Remaining production wiring
 
-Two gaps stand between this repository and a fully working production
-ingestion path, both outside `ingestion/`'s own code but worth stating
-plainly here since the ingestion pipeline is the component that surfaces
-them:
+One gap stands between this repository and a fully working production
+ingestion path, outside `ingestion/`'s own code but worth stating plainly
+here since the ingestion pipeline is the component that surfaces it:
 
 - **SharePoint list item metadata schema (blocks `ingest_document_queue`).**
   `function_app.ingest_document_queue`'s `do_ingest` now does real work --
@@ -202,18 +201,6 @@ them:
   `GraphItemMetadataResolver` that maps `GraphClient.get_item_metadata`'s
   response through it, and point `get_metadata_resolver()` at it. No other
   code in this package needs to change.
-- **Cosmos DB `documents` container app settings + RBAC (blocks F4's
-  status writes in Azure mode).** `document_status.CosmosDocumentStatusStore`
-  is fully implemented and wired into `IngestionPipeline` (see
-  `function_app.get_document_status_store()`), but `infra/main.bicep`
-  does not yet pass `COSMOS_ENDPOINT`/`COSMOS_DATABASE_NAME` app settings,
-  nor a Cosmos DB data-plane role assignment, to *this* Function App
-  (only to the orchestrator's -- see `infra/modules/cosmos.bicep`'s
-  `documents` container comment). Until that infra change lands, a real
-  Azure deployment's first ingestion attempt fails loudly with
-  `KeyError: 'COSMOS_ENDPOINT'` rather than silently doing nothing. This
-  is a small, symmetric infra change (the same two setting names already
-  used by the orchestrator) outside this package's ownership.
 
 ## Design notes and ambiguities resolved
 
