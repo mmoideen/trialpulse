@@ -14,7 +14,7 @@
   "dependencies": {
     "@microsoft/teams-js": "^2.31.0",
     "@trialpulse/shared": "*",
-    "react": "^18.3.1",
+    "react": "^19.2.8",
     "react-dom": "^18.3.1",
     "recharts": "^2.13.3"
   },
@@ -24,7 +24,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^18.3.12",
+    "@types/react": "^19.2.18",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^9.39.0",
