@@ -15,7 +15,7 @@ azure-storage-queue==12.17.0
 # orchestrator's Cosmos DB `documents` container). See ingestion/README.md,
 # "Remaining production wiring", for the infra-side app settings and RBAC
 # role assignment this also needs.
-azure-cosmos==4.16.3
+azure-cosmos==4.17.0
 opentelemetry-api==1.44.0
 openai==3.6.0
 httpx==0.28.1
