@@ -17,7 +17,7 @@ azure-storage-queue==12.17.0
 # role assignment this also needs.
 azure-cosmos==4.16.3
 opentelemetry-api==1.44.0
-openai==3.6.0
+openai==3.13.0
 httpx==0.28.1
 
 # Optional document extractors (lazy-imported; see extraction.py). Pinned and
