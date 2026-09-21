@@ -25,7 +25,7 @@ httpx==0.28.1
 # but every import site in the package is lazy so the rest of the test suite
 # never requires these to be present.
 python-docx==1.2.0
-pypdf==6.16.2
+pypdf==6.19.0
 
 # Dev / test tooling:
 pytest==9.1.1
