@@ -10,7 +10,7 @@ azure-search-documents==12.0.0
 # ModuleNotFoundError on every real invocation of that function in a
 # deployed Function App, since a lazy import only defers *when* a package
 # is needed, not *whether* it needs to be installed.
-azure-storage-queue==12.17.0
+azure-storage-queue==12.18.0
 # Used by document_status.CosmosDocumentStatusStore (F4: writes the
 # orchestrator's Cosmos DB `documents` container). See ingestion/README.md,
 # "Remaining production wiring", for the infra-side app settings and RBAC
